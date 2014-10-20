@@ -1,6 +1,7 @@
 d3.json('http://localhost:4567/reasons', function(reasons){
 
 var svg = d3.select('body').append('svg')
+.attr('y', 100)
 .attr('width', 900)
 .attr('height', 500)
 
@@ -19,10 +20,30 @@ var g = svg.selectAll('g')
 g.append('circle')
 	.attr('r', 0)
 .transition().duration(2000).ease('elastic')
-		.attr('cx', function(d, i) { return (i+1) * 50 })
-		.attr('cy', 50)
+		.attr('cx', function(d, i) { return (i+1) * 30 })
+		.attr('cy', 100)
 		.attr('r', 10)
-		.style('fill', 'brown')
+		.style('stroke-width', '4px')
+		.style('stroke', 'blanchedalmond')
+
+
+var circles = d3.selectAll('circle')
+	.on('click', showInfo)
+	.on("mouseover", function(d) {d3.select(this).classed("text-hover",true);})
+  .on("mouseout" , function(d) {d3.select(this).classed("text-hover",false);})
+
+function showInfo(){
+
+	var div = d3.select('.content')
+		.text(d3.select(this).data()[0].author)
+
+}
+
+
+
+
+
+
 
 // g.append('text')
 // 	// .attr('class', 'hidden')
@@ -31,21 +52,6 @@ g.append('circle')
 // 	.attr('text-anchor', 'middle')
 // 	.text(function(d) { return d.author })
 
-var circles = d3.selectAll('circle')
-	.on('click', showInfo)
-
-
-function showInfo(){
-
-thisG = d3.select(this)
-// console.log(thisG.data()[0].author)
-
-var div = d3.select('.showInfo')
-	.style("left", 100)
-  .style("top", 100)
-	.text(thisG.data()[0].author)
-
-}
 
 	// svg.selectAll('text')
 	// 	.data(reasons)
