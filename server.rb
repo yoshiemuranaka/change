@@ -38,12 +38,13 @@ end
 get '/reasons' do 
 	content_type :json
 	reasons = Reason.all
-	hash = {
-		name: 'root',
-		children: reasons,
-	}
+	# hash = {
+	# 	name: 'root',
+	# 	children: reasons,
+	# }
 
-	hash.to_json
+	# hash.to_json
+	reasons.to_json
 end
 
 
