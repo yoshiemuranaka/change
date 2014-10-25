@@ -6,12 +6,12 @@ require_relative './connection'
 
 # API = File.read('./.apikey')
 
-# query = JSON.parse(HTTParty.get("http://api.change.org/v1/petitions/132448/reasons?api_key=#{API}&page_size=50&sort=time_desc"))['reasons']
+# query = JSON.parse(HTTParty.get("http://api.change.org/v1/petitions/132448/reasons?api_key=#{API}&page_size=20&sort=time_desc"))['reasons']
 
 # # reasons = []
 
 # query.each do |reason|
-# 	time = reason["created_at"]
+# 	date = reason["created_at"]
 # 	content = reason["content"]
 # 	author = reason["author_name"]
 
@@ -22,9 +22,11 @@ require_relative './connection'
 # 	# 	})
 
 # 	Reason.create({
-# 		time: time,
+# 		date: date,
 # 		content: content,
-# 		author: author
+# 		author: author,
+# 		value: (1..4).to_a.sample,
+# 		time_of_day: (0..3).to_a.sample
 # 		})
 
 # end
@@ -40,8 +42,7 @@ get '/reasons' do
 	reasons = Reason.all
 	data = {
 		name: 'Reasons',
-		children: reasons,
-		value: 42
+		children: reasons
 	}
 
 	data.to_json

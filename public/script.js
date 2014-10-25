@@ -21,22 +21,24 @@ var color = ["#156b87", "#876315", "#543510", "#872815"]
 	// .value( function(d) { return d.size })
 	// .value(function(d){ return Math.abs(Math.sin(Date.parse(d.time))) * 10 })
 	// .value(function(d){ return 1+ Math.floor(Math.random()*50); })//value is a random number for now
-var tweet = 50
-var retweet = 20
-var pic = 80
-var link = 40
+// 
+// var tweet = 50
+// var retweet = 20
+// var pic = 80
+// var link = 40
 
-var root = {
-  children: [
-  	{value: tweet, color: 0},
-  	{value: retweet, color: 1},
-    {value: pic, color: 2},
-    {value: link, color: 3},
-    {value: link, color: 3},
-    {value: pic, color: 2},
-    ]
-};
+// var root = {
+//   children: [
+//   	{value: tweet, color: 0},
+//   	{value: retweet, color: 1},
+//     {value: pic, color: 2},
+//     {value: link, color: 3},
+//     {value: link, color: 3},
+//     {value: pic, color: 2},
+//     ]
+// };
 
+d3.json('http://localhost:4567/reasons', function(data){  
 
 
 var svg = d3.select("body").append("svg")
@@ -51,14 +53,16 @@ var pack = d3.layout.pack()
 
 
 svg.selectAll("circle")
-    .data(pack.nodes(root).slice(1))
+    .data(pack.nodes(data).slice(1))
   .enter().append("circle")
+  	.attr('r', 0)
+		.transition().duration(2000).ease('elastic')
     .attr("cx", function(d) { return d.x; })
     .attr("cy", function(d) { return d.y; })
     .attr("r", function(d) { return d.r; })
-    .style('fill', function(d) {return color[d.color]});
+    .style('fill', function(d) {return color[d.time_of_day]});
 
- 
+ } )
 
 
 // d3.json('http://localhost:4567/reasons', function(d){ 
