@@ -40,7 +40,8 @@ get '/reasons' do
 	reasons = Reason.all
 	data = {
 		name: 'Reasons',
-		children: reasons
+		children: reasons,
+		value: 42
 	}
 
 	data.to_json
