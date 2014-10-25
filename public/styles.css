@@ -1,4 +1,4 @@
-.hidden{
+/*.hidden{
 	display: none
 }
 
@@ -9,4 +9,5 @@ div.showInfo{
 
 .node{
 	opacity: 0;
-}
+}*/
+.text-hover{opacity: .5}
