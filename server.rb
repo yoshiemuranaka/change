@@ -6,9 +6,9 @@ require_relative './connection'
 
 # API = File.read('./.apikey')
 
-# query = JSON.parse(HTTParty.get("http://api.change.org/v1/petitions/132448/reasons?api_key=#{API}&page_size=20&sort=time_desc"))['reasons']
+# query = JSON.parse(HTTParty.get("http://api.change.org/v1/petitions/132448/reasons?api_key=#{API}&page_size=50&sort=time_desc"))['reasons']
 
-# reasons = []
+# # reasons = []
 
 # query.each do |reason|
 # 	time = reason["created_at"]

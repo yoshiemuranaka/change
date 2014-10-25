@@ -1,8 +1,8 @@
 var size = 500
 
 //CHECK THIS FUNCTION
-var color = d3.scale.quantize()
-    .range(["#156b87", "#876315", "#543510", "#872815"]);
+// var color = d3.scale.quantize()
+    // .range(["#156b87", "#876315", "#543510", "#872815"]);
 
 var svg = d3.select('body').append('svg')
 	.attr('width', size)
@@ -15,8 +15,9 @@ var pack = d3.layout.pack()
 	.sort(d3.descending)
 	.size([size - 10, size - 10])
 	.padding(2)
-	// .value(function(d){ return Math.abs(Math.sin(Date.parse(d.time))) * 10 })
-	.value(function(d){ return 1+ Math.floor(Math.random()*50); })//value is a random number for now
+	// .value( function(d) { return d.size })
+	.value(function(d){ return Math.abs(Math.sin(Date.parse(d.time))) * 10 })
+	// .value(function(d){ return 1+ Math.floor(Math.random()*50); })//value is a random number for now
 
 
 
@@ -26,7 +27,7 @@ d3.json('http://localhost:4567/reasons', function(reasons){
 	var node = svg.datum(reasons).selectAll('.node')
 		.data(pack.nodes)
 		.enter().append('circle')
-			.attr('class', function(d) {return d.children ? "node" : "leaf node"; })
+			.attr('class', function(d) {return d.children ? "node root" : "leaf node"; })
 			.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 			.attr('opacity', 0.5)
 			.attr('r', 0)
@@ -46,9 +47,11 @@ d3.json('http://localhost:4567/reasons', function(reasons){
 	// 		.style('stroke', function(d) {return color(d.value)})
 
 
-});
+}).on('load', function(){
+	d3.selectAll('circle').on('click', function(){console.log('hi')})
+})
 
-
+d3.touches('.leaf', function(){console.log('hey there')})
 //CHECK THIS FUNCTION
 d3.select(self.frameElement).style('height', size)
 
@@ -69,9 +72,8 @@ d3.select(self.frameElement).style('height', size)
 	//  });
 
 
-
-// var circles = d3.selectAll('circle')
-// 	.on('click', showInfo)
+// var leaves = d3.selectAll('leaf')
+// 	leaves.on('click', showInfo)
 // 	.on("mouseover", function(d) {d3.select(this).classed("text-hover",true);})
 //   .on("mouseout" , function(d) {d3.select(this).classed("text-hover",false);})
 
