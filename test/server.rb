@@ -8,11 +8,9 @@ require 'twitter'
 key = File.read('./.key')
 secret = File.read('./.secret')
 
-@twitter = Twitter::REST::Client.new do |config|
+twitter = Twitter::REST::Client.new do |config|
   config.consumer_key = key
   config.consumer_secret = secret
-  # config.access_token = "2671184810-4l0gYI8i5Fg2528k2QXZmMt8X4EyktDk60lOFvj"
-  # config.access_token_secret = "LPaGbUANCwAP5TTLqCmjMzk3ioamy6KluASp55bsevFKt"
 end
 
 get '/' do
@@ -21,7 +19,7 @@ end
 
 get '/tweets' do 
 
-	tweets = @twitter.user_timeline('kanyewest', :count => 20)
+	tweets = twitter.user_timeline('kanyewest', :count => 20)
 	data = []
 	
 	tweets.each do |tweet|
