@@ -4,7 +4,7 @@
 <html>
   <head>
   <script
-      type="text/javascript" i
+      type="text/javascript"
       src="http://d3js.org/d3.v3.min.js">
   </script>
   <script
@@ -13,36 +13,37 @@
   </script>
 </head>
 <body>
+
+	<div id='portrait'></div>
+
 <script type="text/javascript">
+	var size = 600
 
-	var w = 900
-			h = 500
+	var color = ["#156b87", "#876315", "#543510", "#872815"]
 
-	var svg = d3.select('body').append('svg')
-		.attr('width', w)
-		.attr('height', h)
-	
-	var pack = d3.layout.pack()
-		.size([w, h])
-		.padding(5)
-	
-	d3.json('./nodes.js', function(reasons){
+	d3.json('http://localhost:4567/tweets', function(data){
 
-		var nodes = pack.nodes(reasons)
+		var svg=d3.select('div#portrait').append('svg')
+			.attr('width', size)
+			.attr('height', size)
 
-		var nodes = svg.selectAll('circle')
-			.data(pack.nodes({children: reasons}))
-			.enter().append('circle')
+		var pack = d3.layout.pack()
+			.size([size, size])
+			.sort(d3.descending)
+			.padding(2)
+
+		svg.selectAll('circle')
+				.data(pack.nodes(data).slice(1))
+			.enter.append('circle')
 				.attr('r', 0)
-				.attr('opacity', 0.5)
 			.transition().duration(2000).ease('elastic')
-				.attr('cx', function(d, i) { return (i+1) * 30 })
-				.attr('cy', function(d) {return d.y })
-				.attr('r', 10)
-				.style('stroke-width', '4px')
-				.style('stroke', 'blanchedalmond')
-		});
+				.attr('cx', function(d) { return d.x })
+				.attr('cy', function(d) { return d.y })
+				.attr('r', function(d) { return d.r })
+				.attr('fill', function(d) { return color[d.color_code] })
 
+	})
 </script>
+
 </body>
 </html>
