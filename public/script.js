@@ -1,10 +1,10 @@
-var size = 500
+var size = 600
 
-var color = ["#156b87", "#876315", "#543510", "#872815"]
+var color = ["#C73A00", "#E1835C", "#484240", "#481500"]
 
 d3.json('http://localhost:4567/reasons', function(data){  
 
-
+console.log(data)
 	var svg = d3.select("body").append("svg")
 	  .attr("width", size)
 	  .attr("height", size)
@@ -30,15 +30,16 @@ d3.json('http://localhost:4567/reasons', function(data){
 	 	 	.on('mouseover', hoverTrue)
 	 	 	.on('mouseout', hoverFalse)
 
-	 d3.select('button').on('click', filter)
- 
 
 } )//end AJAX
 
-function filter(){
-	var svg = d3.select('svg')
-	console.log(svg)
+
+function shuffleSelectReason(){
+	circles = d3.selectAll('circle')[0]
+	circle = d3.shuffle(circles)[0]
+	return circle
 }
+
 
 function showInfo(d){
 	d3.selectAll('circle').classed('selected', false)
@@ -54,6 +55,13 @@ function hoverTrue(){
 function hoverFalse(){
 	d3.select(this).classed('text-hover', false)
 }
+
+setInterval(function() {
+	circle = shuffleSelectReason()
+	circle.__onclick()
+	// showInfo(circle.__onclick())
+}, 5000);
+
 
 d3.select(self.frameElement).style('height', size)
 
